@@ -4,9 +4,9 @@ Author:Yang Sheng-rong
 Date:2023年07月03日
 Email:3118393236@qq.com
 """
+from typing import Any
 
 import pymysql
-from typing import Union, Any
 
 
 class MysqlOrm:
@@ -89,7 +89,7 @@ class MysqlOrm:
         self.sql = sql
         return self
 
-    def select(self, **kwargs) -> object:
+    def select(self, **kwargs):
         sql = f'''select * from {self.table} where '''
         key_list = list(kwargs.keys())
         key_list = list(map(self.filter_rule, key_list))
@@ -105,10 +105,11 @@ class MysqlOrm:
         self.sql = sql
         return self
 
-    def all(self) -> object:
-        sql = f'''select * from {self.table}'''
-        self.cursor.execute(sql)
-        return self.cursor.fetchall()
+    def all(self):
+        self.sql = f'''select * from {self.table}'''
+        # self.cursor.execute(sql)
+        return self
+        # return self.cursor.fetchall()
 
     def save(self):
         self.cursor.execute(self.sql)
